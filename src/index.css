@@ -1,0 +1,168 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Press+Start+2P&display=swap');
+
+:root {
+  font-family: 'Orbitron', 'Share Tech Mono', 'Courier New', monospace;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Skippr Minimal Color System */
+  --black: #000000;
+  --near-black: #0A0A0A;
+  --charcoal: #111111;
+  --gray-border: #2A2A2A;
+  --gray-text: #B8B8B8;
+  --gray-muted: #666666;
+  --white: #FFFFFF;
+  --cyan-primary: #00d9ff;
+  --cyan-secondary: #0ea5e9;
+  --cyan-soft: #7dd3fc;
+  --cyan-muted: #0e7490;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 3cm;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+.font-retro-heading {
+  font-family: 'Press Start 2P', 'Orbitron', monospace !important;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.font-tech-mono {
+  font-family: 'Share Tech Mono', 'Courier New', monospace !important;
+  letter-spacing: 0.02em;
+}
+
+.glassmorphism {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.grid-pattern {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.cta-button {
+  background: linear-gradient(135deg, var(--cyan-primary), var(--cyan-secondary));
+  color: var(--black);
+  border: none;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 8px;
+}
+
+.cta-button:hover {
+  filter: brightness(1.1);
+}
+
+.secondary-cta {
+  background-color: transparent;
+  border: 1px solid var(--cyan-primary);
+  color: var(--cyan-primary);
+  transition: all 0.2s ease;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 8px;
+}
+
+.secondary-cta:hover {
+  background-color: var(--cyan-primary);
+  color: var(--black);
+}
+
+.neon-border {
+  position: relative;
+  z-index: 10;
+}
+
+.neon-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 1.5rem;
+  border: 4px solid transparent;
+  background-image: linear-gradient(to right, #00ff00, #ff00ff),
+                     linear-gradient(to right, #00ff00, #ff00ff);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-position: center center, center center;
+  background-size: 100% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  z-index: -1;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5), 0 0 15px rgba(255, 0, 255, 0.5);
+  animation: pulse 4s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5), 0 0 15px rgba(255, 0, 255, 0.5); 
+  }
+  50% { 
+    box-shadow: 0 0 25px rgba(0, 255, 0, 0.8), 0 0 25px rgba(255, 0, 255, 0.8); 
+  }
+}
+
+.minimal-card {
+  background: var(--charcoal);
+  border: 1px solid var(--gray-border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: border-color 0.2s ease;
+}
+
+.minimal-card:hover {
+  border-color: var(--cyan-muted);
+}
+
+/* Font system documentation */
+/* 
+1. Orbitron (body text) - Applied via :root, futuristic 80s style for paragraphs, descriptions, UI elements
+2. Press Start 2P (retro headings) - Applied via .font-retro-heading class, classic 8-bit game style for headlines
+3. Share Tech Mono (tech/code) - Applied via .font-tech-mono class, modern monospace with retro feel
+4. Monospace fallback - Applied via .font-mono class, used for code blocks and technical elements
+*/
+
+.font-mono {
+  font-family: 'Share Tech Mono', ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+/* Code block styling */
+.code-block {
+  background: var(--near-black);
+  border: 1px solid var(--gray-border);
+  border-radius: 8px;
+  font-family: 'Share Tech Mono', 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+.syntax-keyword { color: var(--cyan-soft); }
+.syntax-string { color: var(--gray-text); }
+.syntax-comment { color: var(--gray-muted); }
+.syntax-variable { color: var(--white); }
