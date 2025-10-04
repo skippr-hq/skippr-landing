@@ -1,13 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Hero: React.FC = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [scrollY, setScrollY] = useState(0);
-  const eyesRef = useRef<HTMLDivElement>(null);
   const rotatingTexts = ['Localhost', 'Staging', 'CLI', 'Production'];
 
   useEffect(() => {
@@ -40,98 +37,6 @@ const Hero: React.FC = () => {
     }
   }, [currentText, isDeleting, currentWordIndex, rotatingTexts]);
 
-  // Instant mouse tracking - no throttling
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Calculate eye pupil positions based on mouse and scroll
-  const calculateEyePosition = (eyeRect: DOMRect) => {
-    const eyeCenterX = eyeRect.left + eyeRect.width / 2;
-    const eyeCenterY = eyeRect.top + eyeRect.height / 2;
-    
-    // Distance from eye to mouse
-    const distanceX = mousePosition.x - eyeCenterX;
-    const distanceY = mousePosition.y - eyeCenterY;
-    const totalDistance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-    
-    // Maximum movement range for pupils
-    const maxMovement = eyeRect.width * 0.2;
-    
-    // Simple angle calculation
-    const angle = Math.atan2(distanceY, distanceX);
-    
-    // Distance-based movement with smooth falloff
-    let movement = maxMovement;
-    if (totalDistance > 300) {
-      movement = maxMovement * Math.max(0.3, Math.min(1, 600 / totalDistance));
-    }
-    
-    return {
-      x: Math.cos(angle) * movement,
-      y: Math.sin(angle) * movement
-    };
-  };
-
-  // Animated Eyes Component - Instant Response
-  const AnimatedEyes: React.FC = () => {
-    const leftEyeRef = useRef<HTMLDivElement>(null);
-    const rightEyeRef = useRef<HTMLDivElement>(null);
-    const [, forceUpdate] = useState({});
-    
-    // Force re-render when mouse moves
-    useEffect(() => {
-      forceUpdate({});
-    }, [mousePosition]);
-    
-    // Calculate positions in real-time
-    const getEyePosition = (eyeRef: React.RefObject<HTMLDivElement>) => {
-      if (!eyeRef.current) return { x: 0, y: 0 };
-      const rect = eyeRef.current.getBoundingClientRect();
-      return calculateEyePosition(rect);
-    };
-    
-    const leftPos = getEyePosition(leftEyeRef);
-    const rightPos = getEyePosition(rightEyeRef);
-    
-    return (
-      <span className="inline-flex items-center gap-1 text-xl md:text-2xl lg:text-3xl xl:text-4xl">
-        {/* Left Eye */}
-        <div 
-          ref={leftEyeRef}
-          className="relative w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 bg-white rounded-full border-2 border-gray-300"
-        >
-          <div 
-            className="absolute w-2 h-2 md:w-3 md:h-3 lg:w-4 lg:h-4 xl:w-5 xl:h-5 bg-black rounded-full"
-            style={{
-              left: '50%',
-              top: '50%',
-              transform: `translate(-50%, -50%) translate3d(${leftPos.x}px, ${leftPos.y}px, 0)`
-            }}
-          />
-        </div>
-        {/* Right Eye */}
-        <div 
-          ref={rightEyeRef}
-          className="relative w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 bg-white rounded-full border-2 border-gray-300"
-        >
-          <div 
-            className="absolute w-2 h-2 md:w-3 md:h-3 lg:w-4 lg:h-4 xl:w-5 xl:h-5 bg-black rounded-full"
-            style={{
-              left: '50%',
-              top: '50%',
-              transform: `translate(-50%, -50%) translate3d(${rightPos.x}px, ${rightPos.y}px, 0)`
-            }}
-          />
-        </div>
-      </span>
-    );
-  };
 
   return (
     <>
